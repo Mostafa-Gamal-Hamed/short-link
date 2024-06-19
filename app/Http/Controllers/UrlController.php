@@ -31,7 +31,7 @@ class UrlController extends Controller
         $url->user_id      = $user;
         $url->save();
 
-        return response()->json(['short_url' => url($shortUrl)]);
+        return response()->json(['short_url' => url($shortUrl), 'original_url' => url($request->original_url)]);
         }
     }
 

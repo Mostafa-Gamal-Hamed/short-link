@@ -44,7 +44,9 @@
                         @enderror
                         <button type="submit" class="btn btn-info btn-block mt-3">تقصير</button>
                     </form>
-                    <div class="text-light fs-5 fw-bold mt-4 rounded" id="result"></div>
+                    <a href="" id="link">
+                        <div class="text-light fs-5 fw-bold mt-4 rounded" id="result"></div>
+                    </a>
                 @endif
             @else
                 <div class="text-center">
@@ -148,6 +150,7 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('result').innerText = `${data.short_url}`;
+                    document.getElementById('link').href = `${data.original_url}`;
                 });
         });
     </script>

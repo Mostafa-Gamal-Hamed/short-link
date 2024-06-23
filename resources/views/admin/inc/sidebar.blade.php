@@ -26,7 +26,6 @@
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="{{ route('pages') }}" class="dropdown-item">الصفحات</a>
                     <a href="{{ route('addPage') }}" class="dropdown-item">اضافة صفحة</a>
-                    <a href="{{ route('showPages') }}" class="dropdown-item">عرض الصفحات</a>
                 </div>
             </div>
 
@@ -36,6 +35,7 @@
                         class="fas fa-users text-warning"></i>المستخدمين</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="{{ route('users') }}" class="dropdown-item">المشتركين</a>
+                    <a href="{{ route('guests') }}" class="dropdown-item">الزوار</a>
                     <a href="{{ route('messages') }}" class="dropdown-item">الرسائل</a>
                 </div>
             </div>

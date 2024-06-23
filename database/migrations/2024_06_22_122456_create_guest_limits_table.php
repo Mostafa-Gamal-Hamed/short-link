@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qrs', function (Blueprint $table) {
+        Schema::create('guest_limits', function (Blueprint $table) {
             $table->id();
-            $table->string('original_url');
-            $table->text("qr");
-            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('limit');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qrs');
+        Schema::dropIfExists('guest_limits');
     }
 };

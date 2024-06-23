@@ -5,44 +5,44 @@
     <h1 class="text-center mt-5 mb-5">
         سياسة الخصوصية
     </h1>
-    <div class="shadow bg-light p-3">
+    <div class="shadow bg-light p-3 flexColumn">
         <h2>سياسة الخصوصية</h2>
         <h4>سياسة الخصوصية هذه تصف كيفية جمع واستخدام ومشاركة وحماية المعلومات الخاصة بك عند استخدام موقعنا.</h4>
         <h5>جمع المعلومات</h5>
         <h4>نحن نجمع المعلومات التالية:</h4>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>المعلومات الشخصية: </h5>
             <p>التي تقدمها لنا عند التسجيل أو استخدام خدماتنا، مثل الاسم، البريد الإلكتروني، رقم الهاتف.</p>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>معلومات الاستخدام: </h5>
             <p>التي يتم جمعها تلقائيًا عند استخدامك لموقعنا، مثل عنوان IP، نوع المتصفح، الصفحات التي تزورها، ومدة التصفح.</p>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>ملفات تعريف الارتباط (Cookies):</h5>
             <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك على الموقع وتخصيص المحتوى والإعلانات.</p>
         </div>
         <h4>استخدام المعلومات</h4>
         <h4>نحن نستخدم المعلومات التي نجمعها للأغراض التالية:</h4>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>تقديم وتحسين خدماتنا: </h5>
             <p>لضمان تقديم أفضل تجربة للمستخدمين.</p>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>الاتصال بك: </h5>
             <p>لإرسال التحديثات والإشعارات المتعلقة بالخدمات.</p>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>تحليل البيانات: </h5>
             <p>لفهم كيفية استخدام خدماتنا وتحسينها.</p>
         </div>
         <h4>مشاركة المعلومات</h4>
         <h4>نحن لا نشارك معلوماتك الشخصية مع أطراف ثالثة باستثناء الحالات التالية:</h4>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>مع مقدمي الخدمات: </h5>
             <p>الذين يساعدوننا في تشغيل موقعنا وتقديم الخدمات.</p>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flexColumn">
             <h5>للامتثال للقوانين: </h5>
             <p>إذا كنا نعتقد أن الكشف عن المعلومات ضروري للامتثال للقانون أو لحماية حقوقنا القانونية.</p>
         </div>
@@ -67,14 +67,6 @@
         <p>نحتفظ بالحق في تعديل شروط الخدمة هذه في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة.</p>
         <h4>الاتصال بنا</h4>
         <p>إذا كان لديك أي أسئلة بخصوص سياسة الخصوصية أو شروط الخدمة، يرجى الاتصال بنا على البريد الإلكتروني [your-email@example.com].</p>
-        <div class="d-flex align-items-center">
-            <h5></h5>
-            <p></p>
-        </div>
-        <div class="d-flex align-items-center">
-            <h5></h5>
-            <p></p>
-        </div>
     </div>
 </div>
 @endsection

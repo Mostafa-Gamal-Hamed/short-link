@@ -20,39 +20,33 @@
     {{-- Generate Qr --}}
     <div class="mb-5 p-3">
         <div class="shadow p-3" style="background-color: white;">
-            @if (Auth::user())
-                @if ($count >= Auth::user()->limitQr)
-                    <h3>قد وصلت إلى الحد الأقصى لرموز الاستجابة السريعة QR.</h3>
-                @else
-                    <h2 class="mb-3 fw-bold text-center mb-5">اصنع رمز الاستجابة السريعة</h2>
-                    <div class="row justify-content-center align-items-center mt-5">
-                        <div class="col">
-                            <form action="{{ route('generateQr') }}" method="POST">
-                                @csrf
-                                <input type="url" name="url" class="form-control" placeholder="ادخل الرابط" required>
-                                @error('url')
-                                    <p>{{ $message }}</p>
-                                @enderror
-                                <button type="submit" class="btn btn-primary btn-block mt-3">احصل على الرابط</button>
-                            </form>
-                        </div>
-                        <div class="col text-center border-start">
-                            <img src="{{ asset('images/Qr-qrr.png') }}" class="img-fluid" width="300px" height="300px"
-                                alt="Qr">
-                        </div>
-                    </div>
-                @endif
-            @else
-                <div class="text-center">
-                    <h3>قم بتسجيل الدخول لكى تستخدم رمز الاستجابة السريعة Qr</h3>
-                    <a href="{{ route('login') }}">تسجيل دخول</a>
-                </div>
+            <h2 class="mb-3 fw-bold text-center mb-5">اصنع رمز الاستجابة السريعة</h2>
+            {{-- Messages --}}
+            @if (session('error'))
+                <div class="alert alert-danger text-center">{{ session('error') }}</div>
             @endif
+
+            <div class="row justify-content-center align-items-center mt-5 flexColumn">
+                <div class="col column">
+                    <form action="{{ route('generateQr') }}" method="POST">
+                        @csrf
+                        <input type="url" name="url" class="form-control" placeholder="ادخل الرابط" required>
+                        @error('url')
+                            <p>{{ $message }}</p>
+                        @enderror
+                        <button type="submit" class="btn btn-primary btn-block mt-3">احصل على الرابط</button>
+                    </form>
+                </div>
+                <div class="col text-center border-start column">
+                    <img src="{{ asset('images/Qr-qrr.png') }}" class="img-fluid" width="300px" height="300px"
+                        alt="Qr">
+                </div>
+            </div>
         </div>
     </div>
 
     {{-- About Qr --}}
-    <div class="mb-5 p-3">
+    <div class="mb-5 p-3 Possibilities">
         <div class="shadow bg-light p-2">
             <h2 class="text-center mb-3">تعريف رمز الاستجابة السريع QR</h2>
             <div>

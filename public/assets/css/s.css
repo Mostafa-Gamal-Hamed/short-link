@@ -74,7 +74,6 @@ header.qrHeader img{
 
 /* Ads img */
 .ads{
-    /* height: 50px; */
     position: relative;
 }
 .ads a{
@@ -89,12 +88,6 @@ header.qrHeader img{
     width: 100%;
     height: 150px;
     object-fit: fill;
-    position: absolute;
-    z-index: -1;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
 }
 
 .adsRL{
@@ -107,12 +100,31 @@ header.qrHeader img{
     width: 100%;
     margin-bottom: 10px;
     object-fit: fill;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+}
+
+/* Media */
+@media screen and (max-width: 750px) {
+    .flexColumn{
+        flex-direction: column;
+    }
+    .flexColumn > .column{
+        width: 100%;
+    }
+    .flexColumn > .column .images {
+        width: 50%;
+        margin: auto;
+    }
+
+    .adsRL a img{
+        width: 100%;
+        min-height: 250px;
+        margin-bottom: 10px;
+        object-fit: fill;
+    }
+
+    .Possibilities{
+        padding: 0 !important;
+    }
 }
 
 

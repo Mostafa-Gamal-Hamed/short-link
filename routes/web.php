@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdsController;
+use App\Http\Controllers\Admin\GuestController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SiteController;
 use App\Http\Controllers\Admin\UserController;
@@ -41,8 +42,6 @@ Route::middleware('isAdmin')->group(function () {
     Route::controller(PageController::class)->group(function () {
         // All pages
         Route::get('admin/pages', 'index')->name('pages');
-        // How to display Page
-        Route::get('admin/showPages', 'show')->name('showPages');
         // Create page
         Route::get('admin/addPage', 'create')->name('addPage');
         // Add page
@@ -79,6 +78,14 @@ Route::middleware('isAdmin')->group(function () {
         Route::get("admin/showMessage/{id}", "showMessage")->name("showMessage");
         // Delete message
         Route::delete("admin/deleteMessage/{id}", "deleteMessage")->name("deleteMessage");
+    });
+
+    // Guests
+    Route::controller(GuestController::class)->group(function() {
+        // All guests
+        Route::get("guests","index")->name("guests");
+        // Insert data
+        Route::post("storeGuestLimit/{id}","update")->name("storeGuestLimit");
     });
 
     // Ads
@@ -144,10 +151,10 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 // Add dynamic Route
-Route::get('/اختبار', function() {
-        return view('user.pages.اختبار');
-        });
 
 Route::get('/مصطفى', function() {
         return view('user.pages.مصطفى');
         });
+
+
+

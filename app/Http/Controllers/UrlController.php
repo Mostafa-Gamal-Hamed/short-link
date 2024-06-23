@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin\GuestLimit;
 use App\Models\Admin\LinkUsage;
 use Illuminate\Http\Request;
 use App\Models\Url;
@@ -17,21 +18,44 @@ class UrlController extends Controller
         ]);
 
         // Check the limit
-        $count = Url::where("user_id",Auth::user()->id)->count();
-        if ($count >= Auth::user()->limitUrl) {
-            return response()->json(['short_url'=>'لقد وصلت للحد المسموح']);
-        }else{
+        if (Auth::user()) {
+            $count = Url::where("user_id", Auth::user()->id)->count();
+            if ($count >= Auth::user()->limitUrl) {
+                return response()->json(['short_url' => 'لقد وصلت للحد المسموح']);
+            } else {
+                $user     = Auth::user()->id;
+                $shortUrl = Str::random(6);
 
-        $user     = Auth::user()->id;
-        $shortUrl = Str::random(6);
+                $url = new Url();
+                $url->original_url = $request->original_url;
+                $url->short_url    = $shortUrl;
+                $url->user_id      = $user;
+                $url->save();
 
-        $url = new Url();
-        $url->original_url = $request->original_url;
-        $url->short_url    = $shortUrl;
-        $url->user_id      = $user;
-        $url->save();
+                return response()->json(['short_url' => url($shortUrl)]);
+            }
+        } else {
+            $guestLimit  = GuestLimit::first();
+            $count       = $guestLimit->limit;
+            $guest       = session()->get('guestUrl', 0);
 
-        return response()->json(['short_url' => url($shortUrl), 'original_url' => url($request->original_url)]);
+            if($guest >= $count) {
+                return response()->json(['short_url' => 'لقد وصلت للحد المسموح']);
+            } else {
+                $shortUrl = Str::random(6);
+
+                $url = new Url();
+                $url->original_url = $request->original_url;
+                $url->short_url    = $shortUrl;
+                $url->user_id      = NULL;
+                $url->save();
+
+                session()->put('guestUrl', $guest + 1);
+                return response()->json([
+                    'short_url' => url($shortUrl),
+                    'original_url'=>url($request->original_url)
+                ]);
+            }
         }
     }
 

@@ -46,7 +46,7 @@
             </x-primary-button>
         </div>
     </form>
-    <p>ليس لديك اميل
+    <p>ليس لديك حساب
         <a href="{{ route('register') }}"
             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">سجل هنا</a>
     </p>

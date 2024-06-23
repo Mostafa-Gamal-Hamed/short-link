@@ -10,37 +10,43 @@
 
 @include('user.inc.navbar')
 
-<div class="row m-0 p-0">
-    <div class="col-1 mt-5">
+<div class="row m-0 p-0 ">
+    <div class="col-2 p-0 mt-3">
         @foreach ($right as $ads)
-            <div class="d-flex flex-column mb-3 text-light adsRL" style="position: relative;">
+            <div class="d-flex flex-column adsRL" style="position: relative;">
                 <a href="{{ $ads->link }}" class="nav-link">
                     <div class="text-center side">
-                        <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                        @if ($ads->image)
+                            <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                        @endif
                         <h4>{{ $ads->title }}</h4>
                         <h5>{{ $ads->description }}</h5>
                     </div>
                 </a>
             </div>
+            <br>
         @endforeach
     </div>
 
     {{-- Body content --}}
-    <div class="col-10">
+    <div class="col-8 p-3">
         @yield('body')
     </div>
 
-    <div class="col-1 mt-5">
+    <div class="col-2 p-0 mt-3">
         @foreach ($left as $ads)
-            <div class="d-flex flex-column mb-3 text-light adsRL">
+            <div class="d-flex flex-column mb-5 adsRL">
                 <a href="{{ $ads->link }}" class="nav-link">
                     <div class="text-center">
-                        <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                        @if ($ads->image)
+                            <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                        @endif
                         <h4>{{ $ads->title }}</h4>
                         <h5>{{ $ads->description }}</h5>
                     </div>
                 </a>
             </div>
+            <br>
         @endforeach
     </div>
 

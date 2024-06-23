@@ -17,8 +17,8 @@
     {{-- Header & Url --}}
     <header class="px-3">
         <div class="section text-light p-3" style="background-color: #3c65ae; border-radius: 0px 0px 20px 20px;">
-            <div class="row">
-                <div class="col">
+            <div class="row flexColumn">
+                <div class="col column">
                     <p>اختصار الرابط</p>
                     <h3>استمتع بالتحكم الكامل في الروابط القصيرة الخاصة بك</h3>
                     <p>
@@ -26,50 +26,39 @@
                         والرابط في السيرة الذاتية. قم بتقصير الروابط الخاصة بك وتمييزها وإدارتها وتتبعها ومشاركتها بسهولة.
                     </p>
                 </div>
-                <div class="col text-center">
+                <div class="col text-center column">
                     <img src="{{ asset('images/head.png') }}" class="img-fluid rounded" width="350px" height="350px"
                         alt="">
                 </div>
             </div>
             {{-- Url --}}
-            @if (Auth::user())
-                @if ($count >= Auth::user()->limitUrl)
-                    <h3>لقد وصلت للحد المسموح</h3>
-                @else
-                    <form class="mt-5" id="shorten-form">
-                        <input type="text" id="original_url" name="original_url" class="form-control shadow"
-                            placeholder="ادخل الرابط" required>
-                        @error('original_url')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                        <button type="submit" class="btn btn-info btn-block mt-3">تقصير</button>
-                    </form>
-                    <a href="" id="link">
-                        <div class="text-light fs-5 fw-bold mt-4 rounded" id="result"></div>
-                    </a>
-                @endif
-            @else
-                <div class="text-center">
-                    <h3>قم بتسجيل الدخول لكى تستخدم تقصير الرابط</h3>
-                    <a class="nav-link" href="{{ route('login') }}">تسجيل دخول</a>
-                </div>
-            @endif
+            <form class="mt-5" id="shorten-form">
+                <input type="text" id="original_url" name="original_url" class="form-control shadow"
+                    placeholder="ادخل الرابط" required>
+                @error('original_url')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+                <button type="submit" class="btn btn-info btn-block mt-3">تقصير</button>
+            </form>
+            <div class="text-light fs-5 fw-bold mt-4 rounded">
+                <a href="" class="nav-link" id="result" target="_blank"></a>
+            </div>
         </div>
     </header>
 
     {{-- Possibilities --}}
-    <div class="container">
-        <div class="text-center mt-5 p-5">
+    <div class="container mb-5">
+        <div class="text-center mt-5 p-5 Possibilities">
             <h2 class="fw-bold">رابط واحد قصير، رائع.</h2>
             <h6>
                 يعد الرابط القصير أداة تسويقية قوية عندما تستخدمه بعناية. إنه ليس مجرد رابط ولكنه وسيط بين عميلك ووجهته.
                 يتيح لك الرابط القصير جمع الكثير من البيانات حول عملائك وسلوكياتهم.
-                <h6>
+            <h6>
         </div>
     </div>
 
     {{-- Cards --}}
-    <div class="cards mt-5 bg-light p-5">
+    <div class="cards mt-5 bg-light p-5 Possibilities">
         <div class="row">
             <div class="cardInfo col-md-4">
                 <div class="card shadow bg-info">
@@ -114,13 +103,13 @@
     </div>
 
     {{-- Start Qr --}}
-    <div class="row p-2 justify-content-center align-items-center m-0" style="background-color: #e6e6e6;">
-        <div class="col">
+    <div class="row p-2 justify-content-center align-items-center mt-5 flexColumn" style="background-color: #e6e6e6;">
+        <div class="col column">
             <div class="qrCode mt-5">
                 <img src="{{ asset('images/QR-home.png') }}" class="img-fluid border" alt="">
             </div>
         </div>
-        <div class="col">
+        <div class="col column">
             <h1>رموز الاستجابة السريعة</h1>
             <h4 class="mt-3">
                 رموز QR سهلة الاستخدام وديناميكية وقابلة للتخصيص لحملاتك التسويقية. تحليل الإحصائيات وتحسين استراتيجية
@@ -150,7 +139,7 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('result').innerText = `${data.short_url}`;
-                    document.getElementById('link').href = `${data.original_url}`;
+                    document.getElementById('result').href = `${data.original_url}`;
                 });
         });
     </script>

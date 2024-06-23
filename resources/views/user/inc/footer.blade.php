@@ -1,9 +1,11 @@
 {{-- Ads --}}
 @foreach ($down as $ads)
-    <div class="d-flex w-100 text-center m-0 p-2 mb-3 text-light ads">
+    <div class="d-flex w-100 text-center m-0 p-2 mb-3 ads">
         <a href="{{ $ads->link }}" class="w-100 nav-link">
             <div class="text-center">
-                <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                @if ($ads->image)
+                    <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                @endif
                 <h4>{{ $ads->title }}</h4>
                 <h5>{{ $ads->description }}</h5>
             </div>

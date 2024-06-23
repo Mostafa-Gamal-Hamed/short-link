@@ -66,14 +66,16 @@
 </nav>
 
 {{-- Ads --}}
-{{-- @foreach ($up as $ads)
-    <div class="d-flex w-100 text-center mb-4 p-2 mx-2 text-light ads">
+@foreach ($up as $ads)
+    <div class="d-flex w-100 text-center mb-4 p-2 mx-2 ads">
         <a href="{{ $ads->link }}" class="w-100 nav-link" style="width: 100%">
             <div class="text-center">
-                <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                @if ($ads->image)
+                    <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
+                @endif
                 <h4>{{ $ads->title }}</h4>
                 <h5>{{ $ads->description }}</h5>
             </div>
         </a>
     </div>
-@endforeach --}}
+@endforeach

@@ -53,15 +53,8 @@
                             <a href="{{ route('showPage', "$hide") }}" class="btn btn-warning">اظهار</a>
                         </td>
                         <td>
-                            <a href="{{ route('edit', "$hide") }}"><i class="fas fa-edit"></i></a>
                         </td>
                         <td>
-                            <form action="{{ route('deletePage', "$hide") }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
                         </td>
                     </tr>
                 @endforeach

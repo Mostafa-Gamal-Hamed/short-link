@@ -37,12 +37,16 @@ class HomeController extends Controller
             // Hiding pages
             $hidePath  = resource_path('views/user/hide');
             $hideFiles = File::files($hidePath);
-            foreach ($hideFiles as $file) {
-                $fileName = pathinfo($file, PATHINFO_FILENAME);
-                $fileName = str_replace('.blade', '', $fileName);
-                $hidePageName[]  = $fileName;
+            if (File::files($hidePath) != NULL) {
+                foreach ($hideFiles as $file) {
+                    $fileName = pathinfo($file, PATHINFO_FILENAME);
+                    $fileName = str_replace('.blade', '', $fileName);
+                    $hidePageName[]  = $fileName;
+                }
+                $hidePageMax = array_slice($hidePageName, 0, 10);
+            } else {
+                $hidePageMax = [];
             }
-            $hidePageMax = array_slice($hidePageName, 0, 10);
 
             // Pages count
             $showPageCount = count($files);
@@ -53,7 +57,7 @@ class HomeController extends Controller
             $users = User::where('role', 'user')->take(10)->get();
 
             // Users count
-            $usersCount = User::where("role","user")->count();
+            $usersCount = User::where("role", "user")->count();
 
             // Messages
             $messages = ContactUs::take(10)->get();
@@ -63,10 +67,10 @@ class HomeController extends Controller
             // Ads count
             $adsCount = Ads::count();
 
-            return view('admin.الرئيسية',compact("pagesCount","usersCount","adsCount","users","ads","messages","num","siteName","pageMax","hidePageMax"));
+            return view('admin.الرئيسية', compact("pagesCount", "usersCount", "adsCount", "users", "ads", "messages", "num", "siteName", "pageMax", "hidePageMax"));
         } else if (Auth::user()) {
-            $count = Url::where("user_id",Auth::user()->id)->count();
-            return view('user.الرئيسية',compact("count"));
+            $count = Url::where("user_id", Auth::user()->id)->count();
+            return view('user.الرئيسية', compact("count"));
         } else {
             return redirect()->back();
         }

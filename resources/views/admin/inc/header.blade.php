@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{{App\Models\Admin\WebsiteName::latest('id')->first()->name;}}</title>
+    <title>{{ App\Models\Admin\WebsiteName::latest('id')->first()->name }}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -21,18 +21,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{asset('admin/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('admin/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('admin/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 
     {{-- Jquery --}}
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+    {{-- Edit in content --}}
+    <script src="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></script>
 </head>
 
 <body>

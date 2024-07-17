@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('website_names', function (Blueprint $table) {
             $table->id();
             $table->string("name")->unique();
+            $table->string("key");
+            $table->string("desc");
             $table->timestamps();
         });
     }

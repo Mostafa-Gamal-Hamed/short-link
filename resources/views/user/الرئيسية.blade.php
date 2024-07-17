@@ -1,12 +1,21 @@
 @extends('user.layout')
 
-@section('desc')
-    قم بتقصير الروابط الطويلة بسرعة وسهولة باستخدام موقعنا. احصل على رابط قصير فوري.
+@section('key')
+    @if ($siteName->key)
+        {{ $siteName->key }}
+    @else
+        رابط قصير، رابط قصير، قصير، قصير، رابط، رابط، رابط سريع، رابط سريع، اختصار الروابط، اختصار URL، اختصار URL، خدمة
+        اختصار
+        الروابط
+    @endif
 @endsection
 
-@section('key')
-    رابط قصير، رابط قصير، قصير، قصير، رابط، رابط، رابط سريع، رابط سريع، اختصار الروابط، اختصار URL، اختصار URL، خدمة اختصار
-    الروابط
+@section('desc')
+    @if ($siteName->desc)
+        {{ $siteName->desc }}
+    @else
+        قم بتقصير الروابط الطويلة بسرعة وسهولة باستخدام موقعنا. احصل على رابط قصير فوري.
+    @endif
 @endsection
 
 @section('title')
@@ -22,7 +31,8 @@
                     <p>اختصار الرابط</p>
                     <h3>استمتع بالتحكم الكامل في الروابط القصيرة الخاصة بك</h3>
                     <p>
-                        النظام الأساسي <strong>{{App\Models\Admin\WebsiteName::latest('id')->first()->name;}}</strong> الكامل وإدارة الارتباط وتحليلات الارتباط والروابط العميقة ومولد رموز QR
+                        النظام الأساسي <strong>{{ App\Models\Admin\WebsiteName::latest('id')->first()->name }}</strong>
+                        الكامل وإدارة الارتباط وتحليلات الارتباط والروابط العميقة ومولد رموز QR
                         والرابط في السيرة الذاتية. قم بتقصير الروابط الخاصة بك وتمييزها وإدارتها وتتبعها ومشاركتها بسهولة.
                     </p>
                 </div>
@@ -40,8 +50,12 @@
                 @enderror
                 <button type="submit" class="btn btn-info btn-block mt-3">تقصير</button>
             </form>
-            <div class="text-light fs-5 fw-bold mt-4 rounded">
-                <a href="" class="nav-link" id="result" target="_blank"></a>
+            <div class="text-light fs-5 fw-bold mt-3 rounded" id="shortenedLink" style="display: none;">
+                <a href="" class="nav-link overflow-auto" id="result" target="_blank"></a>
+                <div class="d-flex justify-content-start align-items-center gap-4 mt-3">
+                    <button class="btn btn-warning" id="copyButton">نسخ</button>
+                    <i class="fa-solid fa-thumbs-up fs-3" id="like" style="display: none;"></i>
+                </div>
             </div>
         </div>
     </header>
@@ -53,7 +67,7 @@
             <h6>
                 يعد الرابط القصير أداة تسويقية قوية عندما تستخدمه بعناية. إنه ليس مجرد رابط ولكنه وسيط بين عميلك ووجهته.
                 يتيح لك الرابط القصير جمع الكثير من البيانات حول عملائك وسلوكياتهم.
-            <h6>
+                <h6>
         </div>
     </div>
 
@@ -68,7 +82,8 @@
                         </div>
                         <h5 class="card-title text-center">إدارة الارتباط</h5>
                         <p class="card-text mt-2">
-                            <strong>{{App\Models\Admin\WebsiteName::latest('id')->first()->name;}}</strong> هو أفضل خدمة لإدارة الروابط القصيرة لتتبع الروابط القصيرة والعلامات التجارية ومشاركتها.
+                            <strong>{{ App\Models\Admin\WebsiteName::latest('id')->first()->name }}</strong> هو أفضل خدمة
+                            لإدارة الروابط القصيرة لتتبع الروابط القصيرة والعلامات التجارية ومشاركتها.
                         </p>
                     </div>
                 </div>
@@ -138,9 +153,21 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    document.getElementById('shortenedLink').style.display = 'block';
                     document.getElementById('result').innerText = `${data.short_url}`;
                     document.getElementById('result').href = `${data.original_url}`;
                 });
+        });
+
+        // Copy link
+        document.getElementById('copyButton').addEventListener('click', function() {
+            var copyText = document.getElementById('result').innerText;
+            navigator.clipboard.writeText(copyText).then(function() {
+                document.getElementById('like').style.display = 'block';
+                // alert("تم نسخ الرابط: " + copyText);
+            }, function(err) {
+                console.error('Error copying text: ', err);
+            });
         });
     </script>
 @endsection

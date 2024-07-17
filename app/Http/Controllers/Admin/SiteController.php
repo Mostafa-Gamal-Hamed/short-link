@@ -11,16 +11,20 @@ class SiteController extends Controller
     public function index()
     {
         $num   =1;
-        $title = WebsiteName::orderby("id","desc")->get();
+        $title = WebsiteName::first();
         return view("admin.site.site",compact("num","title"));
     }
 
     public function store(Request $request)
     {
         // Validation
-        $request->validate(["name"=>"required|string|min:3"]);
+        $data = $request->validate([
+            "name" =>"required|string|min:3",
+            'key'  => 'required|string',
+            'desc' => 'required|string',
+        ]);
 
-        WebsiteName::create(["name"=>$request->name]);
+        WebsiteName::create($data);
 
         return redirect()->back()->with('success','تم تسجيل الاسم بنجاح');
     }
@@ -29,9 +33,17 @@ class SiteController extends Controller
     {
         $title = WebsiteName::findOrFail($id);
         // Validation
-        $request->validate(["name"=>"required|string|min:3"]);
+        $data = $request->validate([
+            "name" =>"required|string|min:3",
+            'key'  => 'nullable|string',
+            'desc' => 'nullable|string',
+        ]);
         // Update
-        $title->update(["name"=>$request->name]);
+        $title->update([
+            "name"=>$request->name,
+            "key"=>$request->key,
+            "desc"=>$request->desc,
+        ]);
 
         return redirect()->back()->with('success','تم التغير بنجاح');
     }

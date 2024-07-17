@@ -30,12 +30,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('codeQr') }}">رمز الاستجابة السريعة Qr</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ url('عن الشركة') }}">عن الشركة</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('تواصل معنا') }}">تواصل معنا</a>
-                </li> --}}
                 @foreach ($pages as $page)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url("$page") }}">{{ $page }}</a>
@@ -50,15 +44,23 @@
                     </li>
                 @endguest
                 @auth
-                    {{-- <li class="nav-item">
-                        <a href="{{ url('dashboard') }}" class="nav-link">لوحة التحكم</a>
-                    </li> --}}
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button class="nav-link text-light">خروج</button>
-                        </form>
-                    </li>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            الحساب
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item">
+                                <a href="{{ url('dashboard') }}" class="nav-link dashboard">لوحة التحكم</a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button class="nav-link">خروج</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 @endauth
             </ul>
         </div>
@@ -66,16 +68,16 @@
 </nav>
 
 {{-- Ads --}}
-@foreach ($up as $ads)
-    <div class="d-flex w-100 text-center mb-4 p-2 mx-2 ads">
-        <a href="{{ $ads->link }}" class="w-100 nav-link" style="width: 100%">
-            <div class="text-center">
+<div class="row text-center mb-4 p-2 mx-2 ads overflow-y-auto" style="width:99%;">
+    @foreach ($up as $ads)
+        <div class="text-center col mx-1">
+            <a href="{{ $ads->link }}" class="w-100 nav-link" style="width: 100%">
                 @if ($ads->image)
                     <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
                 @endif
                 <h4>{{ $ads->title }}</h4>
                 <h5>{{ $ads->description }}</h5>
-            </div>
-        </a>
-    </div>
-@endforeach
+            </a>
+        </div>
+    @endforeach
+</div>

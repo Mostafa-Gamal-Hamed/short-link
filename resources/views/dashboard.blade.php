@@ -7,9 +7,9 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-x-auto shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    @if (Auth::user() && Auth::user()->role == 'user')
+                    @if (Auth::user()->role == 'user')
                         <h1 class="text-lg font-black text-center text-xl mb-4">اكوادك</h1>
 
                         <div class="container">
@@ -24,6 +24,7 @@
                                     <tr>
                                         <th>العدد</th>
                                         <th>الرابط المختصر</th>
+                                        <th>عدد الزيارات</th>
                                         <th>الرابط</th>
                                     </tr>
                                 </thead>
@@ -31,7 +32,11 @@
                                     @foreach ($url as $url)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $url->short_url }}</td>
+                                            <td>
+                                                <a href="{{ $url->original_url }}"class="track-link" data-url-id="{{ $url->id }}"
+                                                data-user-id="{{ Auth::user()->id }}" target="_blank">{{ $url->short_url }}</a>
+                                            </td>
+                                            <td>{{ $url->click_count }}</td>
                                             <td>{{ $url->original_url }}</td>
                                         </tr>
                                     @endforeach
@@ -71,7 +76,7 @@
 
     <script>
         $(document).ready(function() {
-            // Display for contact
+            // Display url & qr
             $("#urlB").click(function() {
                 $("#url").toggle();
                 $("#qr").hide();
@@ -79,6 +84,29 @@
             $("#qrB").click(function() {
                 $("#qr").toggle();
                 $("#url").hide();
+            });
+
+            // Url click count
+            $('.track-link').click(function(e) {
+                e.preventDefault();
+                let linkId = $(this).data('url-id');
+                let userId = $(this).data('user-id');
+
+                $.ajax({
+                    url: '{{ route('track.click') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        url_id: linkId,
+                        user_id: userId
+                    },
+                    success: function(response) {
+                        // Handle the response if needed
+                    }
+                });
+
+                // Optionally follow the link
+                window.location.href = $(this).attr('href');
             });
         });
     </script>

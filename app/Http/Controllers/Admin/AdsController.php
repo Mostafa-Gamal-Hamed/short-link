@@ -11,11 +11,14 @@ class AdsController extends Controller
 {
     public function index()
     {
-        $ads = Ads::orderby('id','desc')->get();
+        $ads = Ads::orderby('id', 'desc')->get();
         $num = 1;
-        return view("admin.ads.ads",compact("ads","num"));
+        return view("admin.ads.ads", compact("ads", "num"));
     }
-
+/*
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis, nobis.
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil maiores corrupti, magnam eveniet eum rerum cumque consequatur perspiciatis eligendi? Consequuntur!
+*/
     public function create()
     {
         return view("admin.ads.addAds");
@@ -23,36 +26,32 @@ class AdsController extends Controller
 
     public function store(Request $request)
     {
-        if($request->has("image")){
+        if ($request->has("image")) {
             // Validation
             $data = $request->validate([
-
-
-                "image"=>"nullable|image|mimes:png,jpg,jpeg,gif",
-                "link"=>"required|url",
-                "status"=>"required|in:inactivate,activate",
-                "showAds"=>"required|in:الاعلى,يمين,الاسفل,يسار",
+                "image" => "nullable|image|mimes:png,jpg,jpeg,gif",
+                "link" => "required|url",
+                "status" => "required|in:inactivate,activate",
+                "showAds" => "required|in:الاعلى,يمين,الاسفل,يسار",
             ]);
             // Upload Image
             $data['image']  = $request->file('image')->store('ads', 'public');
             // Create Ads
             Ads::create($data);
-        }else{
+        } else {
             // Validation
             $data = $request->validate([
-
-                
-                "link"=>"required|url",
-                "status"=>"required|in:inactivate,activate",
-                "showAds"=>"required|in:الاعلى,يمين,الاسفل,يسار",
+                "link" => "required|url",
+                "status" => "required|in:inactivate,activate",
+                "showAds" => "required|in:الاعلى,يمين,الاسفل,يسار",
             ]);
             // Create Ads
             Ads::create([
-                "title"=>$request->title,
-                "description"=>$request->description,
-                "link"=>$request->link,
-                "status"=>$request->status,
-                "showAds"=>$request->showAds,
+                "title" => $request->title,
+                "description" => $request->description,
+                "link" => $request->link,
+                "status" => $request->status,
+                "showAds" => $request->showAds,
             ]);
         }
 
@@ -72,12 +71,10 @@ class AdsController extends Controller
         if ($request->has('image')) {
             // Validation
             $data = $request->validate([
-
-
-                "image"=>"nullable|image|mimes:png,jpg,jpeg,gif",
-                "link"=>"required|url",
-                "status"=>"required|in:inactivate,activate",
-                "showAds"=>"required|in:الاعلى,يمين,الاسفل,يسار",
+                "image" => "nullable|image|mimes:png,jpg,jpeg,gif",
+                "link" => "required|url",
+                "status" => "required|in:inactivate,activate",
+                "showAds" => "required|in:الاعلى,يمين,الاسفل,يسار",
             ]);
             // Delete old image if exists
             if ($ads->image) {
@@ -88,23 +85,21 @@ class AdsController extends Controller
 
             // Update data
             $ads->update($data);
-        }else{
+        } else {
             // Validation
             $data = $request->validate([
-
-
-                "link"=>"required|url",
-                "status"=>"required|in:inactivate,activate",
-                "showAds"=>"required|in:الاعلى,يمين,الاسفل,يسار",
+                "link" => "required|url",
+                "status" => "required|in:inactivate,activate",
+                "showAds" => "required|in:الاعلى,يمين,الاسفل,يسار",
             ]);
 
             // Update data
             $ads->update([
-                "title"=>$request->title,
-                "description"=>$request->description,
-                "link"=>$request->link,
-                "status"=>$request->status,
-                "showAds"=>$request->showAds
+                "title" => $request->title,
+                "description" => $request->description,
+                "link" => $request->link,
+                "status" => $request->status,
+                "showAds" => $request->showAds
             ]);
         }
 

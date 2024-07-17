@@ -49,6 +49,38 @@
                 </div>
             </div>
             <hr>
+            {{-- Visitors --}}
+            <h4 class="text-center mb-5">الزوار</h4>
+            <div class="row">
+                {{-- Visitors --}}
+                <div class="col-sm-6">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4">
+                        <div class="ms-3 text-center">
+                            <p class="mb-2">عدد الزوار الحالى</p>
+                            @if ($visitors->isEmpty())
+                            <h6>0</h6>
+                            @else
+                            <h6 class="mb-0">{{ $visitors[0]["activeUsers"] }}</h6>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                {{-- Page visiting --}}
+                <div class="col-sm-6">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4">
+                        <div class="ms-3 text-center">
+                            <p class="mb-2">الاكثر زيارة</p>
+                            @if ($visitors->isEmpty())
+                            <h6>0</h6>
+                            @else
+                            <h6 class="mb-0">{{ $visitors[0]["pageTitle"] }}</h6>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {{-- Details --}}
             <h4 class="text-center mb-5">ملخصات</h4>
             <div class="row">
                 {{-- Pages --}}

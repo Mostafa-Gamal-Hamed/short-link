@@ -35,6 +35,16 @@ nav .container-fluid ul li a{
     color: white !important;
 }
 
+.dropdown{
+    padding: 5px 10px !important;
+}
+.dropdown ul{
+    text-align: right !important;
+}
+.dropdown ul li .dashboard{
+    color: black !important;
+}
+
 /* User home */
 header .section{
     background-color: #3c65ae;

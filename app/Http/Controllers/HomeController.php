@@ -7,10 +7,13 @@ use App\Models\Admin\WebsiteName;
 use App\Models\ContactUs;
 use App\Models\Url;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Spatie\Sitemap\Sitemap;
+use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
+use Carbon\Carbon;
+
+
 
 class HomeController extends Controller
 {
@@ -19,12 +22,10 @@ class HomeController extends Controller
         if (Auth::user() && Auth::user()->role == 'admin') {
             // Count
             $num = 1;
-
             // Site name
             $siteName = WebsiteName::all();
 
             //// Pages
-
             // Show pages
             $path  = resource_path('views/user/pages');
             $files = File::files($path);
@@ -67,10 +68,18 @@ class HomeController extends Controller
             // Ads count
             $adsCount = Ads::count();
 
-            return view('admin.الرئيسية', compact("pagesCount", "usersCount", "adsCount", "users", "ads", "messages", "num", "siteName", "pageMax", "hidePageMax"));
+            // Google analytics
+            $startDate = Carbon::now()->subYear();
+            $endDate = Carbon::now();
+            $visitors = Analytics::fetchVisitorsAndPageViews(Period::create($startDate, $endDate));
+
+            return view('admin.الرئيسية', compact("pagesCount", "usersCount", "adsCount", "users", "ads", "messages",
+            "num", "siteName", "pageMax", "hidePageMax", "visitors"));
         } else if (Auth::user()) {
+            // Site name
+            $siteName = WebsiteName::first();
             $count = Url::where("user_id", Auth::user()->id)->count();
-            return view('user.الرئيسية', compact("count"));
+            return view('user.الرئيسية', compact("siteName","count"));
         } else {
             return redirect()->back();
         }

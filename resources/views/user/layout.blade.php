@@ -14,15 +14,15 @@
     <div class="col-2 p-0 mt-3">
         @foreach ($right as $ads)
             <div class="d-flex flex-column adsRL" style="position: relative;">
-                <a href="{{ $ads->link }}" class="nav-link">
-                    <div class="text-center side">
+                <div class="text-center side">
+                    <a href="{{ $ads->link }}" class="nav-link">
                         @if ($ads->image)
                             <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
                         @endif
                         <h4>{{ $ads->title }}</h4>
                         <h5>{{ $ads->description }}</h5>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
             <br>
         @endforeach
@@ -36,15 +36,15 @@
     <div class="col-2 p-0 mt-3">
         @foreach ($left as $ads)
             <div class="d-flex flex-column mb-5 adsRL">
-                <a href="{{ $ads->link }}" class="nav-link">
-                    <div class="text-center">
+                <div class="text-center">
+                    <a href="{{ $ads->link }}" class="nav-link">
                         @if ($ads->image)
                             <img src="{{ asset("storage/$ads->image") }}" class="img-fluid" alt="Ads">
                         @endif
                         <h4>{{ $ads->title }}</h4>
                         <h5>{{ $ads->description }}</h5>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
             <br>
         @endforeach

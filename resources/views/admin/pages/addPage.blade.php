@@ -100,5 +100,39 @@
                 }
             });
         });
+
+        // Edit in content
+        CKEDITOR.replace('content', {
+            extraPlugins: 'justify', // Load the justify plugin for text alignment
+            toolbar: [{
+                    name: 'document',
+                    items: ['Source', '-', 'NewPage', 'Preview', '-', 'Templates']
+                },
+                {
+                    name: 'basicstyles',
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                        'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote',
+                        'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'
+                    ]
+                },
+                {
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize', 'ShowBlocks']
+                }
+            ]
+        });
     </script>
 @endsection

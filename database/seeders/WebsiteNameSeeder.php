@@ -15,6 +15,8 @@ class WebsiteNameSeeder extends Seeder
     {
         DB::table('website_names')->insert([
             'name' => 'اختصار روابط',
+            'key' => 'اختصار, روابط, اختصار روابط',
+            'desc' => 'اختصار كل انواع الروابط',
         ]);
     }
 }

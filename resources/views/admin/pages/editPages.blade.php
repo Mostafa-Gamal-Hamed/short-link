@@ -8,12 +8,13 @@
             <div class="alert alert-danger text-center">{{ session('error') }}</div>
         @endif
 
-        <form action="{{ route('rename',"$page") }}" method="post" id="seoForm"rea>
+        <form action="{{ route('rename', "$page") }}" method="post" id="seoForm"rea>
             @csrf
             {{-- Name --}}
             <div class="form-group">
                 <label for="new_name">ادخل الاسم الجديد</label>
-                <input type="text" id="new_name" name="new_name" value="" class="form-control mt-2 mb-4">
+                <input type="text" id="new_name" name="new_name" value="{{ $page }}"
+                    class="form-control mt-2 mb-4">
                 @error('new_name')
                     <p class="text-danger">يجب ان يكون الحقل حروف و غير فارغ</p>
                 @enderror
@@ -25,7 +26,7 @@
                 {{-- Keywords --}}
                 <div class="mb-3">
                     <label for="key" class="form-label">الكلمات مفتاحية</label>
-                    <input type="text" name="key" id="key" class="form-control" value="{{ old('key') }}">
+                    <input type="text" name="key" id="key" class="form-control" value="{{ $key }}">
                     <small id="keyHint" class="form-text text-muted">افصل بين الكلمات بفاصلة (,)</small>
                     <small id="keyError" class="text-danger d-none">يجب أن يكون الحقل غير فارغ ويحتوي على , أو أحرف</small>
                     @error('key')
@@ -36,7 +37,7 @@
                 {{-- Description --}}
                 <div class="mb-3">
                     <label for="desc" class="form-label">وصف الصفحة</label>
-                    <input type="text" name="desc" id="desc" class="form-control" value="{{ old('desc') }}">
+                    <input type="text" name="desc" id="desc" class="form-control" value="{{ $desc }}">
                     <small id="descError" class="text-danger d-none">يجب أن يكون الحقل غير فارغ</small>
                     @error('desc')
                         <small class="text-danger">يجب ان يكون الحقل غير فارغ</small>
@@ -52,7 +53,7 @@
             {{-- Content --}}
             <div class="mt-3">
                 <label for="content" class="form-label">محتوى الصفحة</label>
-                <textarea name="content" class="form-control" id="content" cols="" rows="5"></textarea>
+                <textarea name="content" class="form-control" id="content" cols="" rows="10">{{ $body }}</textarea>
                 @error('content')
                     <small class="text-danger">يجب ان يكون الحقل حروف و غير فارغ</small>
                 @enderror
@@ -94,6 +95,40 @@
                     event.preventDefault();
                 }
             });
+        });
+
+        // Edit in content
+        CKEDITOR.replace('content', {
+            extraPlugins: 'justify', // Load the justify plugin for text alignment
+            toolbar: [{
+                    name: 'document',
+                    items: ['Source', '-', 'NewPage', 'Preview', '-', 'Templates']
+                },
+                {
+                    name: 'basicstyles',
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                        'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote',
+                        'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'
+                    ]
+                },
+                {
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize', 'ShowBlocks']
+                }
+            ]
         });
     </script>
 @endsection

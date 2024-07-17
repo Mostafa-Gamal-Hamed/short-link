@@ -28,13 +28,13 @@ class PageController extends Controller
         // Hiding pages
         $hidePath  = resource_path('views/user/hide');
         $hideFiles = File::files($hidePath);
-        if(File::files($hidePath) != NULL){
+        if (File::files($hidePath) != NULL) {
             foreach ($hideFiles as $file) {
                 $fileName = pathinfo($file, PATHINFO_FILENAME);
                 $fileName = str_replace('.blade', '', $fileName);
                 $hidePages[]  = $fileName;
             }
-        }else{
+        } else {
             $hidePages = [];
         }
 
@@ -73,11 +73,12 @@ class PageController extends Controller
             'content' => 'required|string',
         ]);
 
-
-        $title       = $request->title;
-        $filePath    = resource_path("views/user/pages/{$title}.blade.php");
-        $content     = "@extends('user.layout') @section('key')".$request->key."@endsection @section('desc')".$request->desc."@endsection @section('body')" . $request->content . "@endsection";
-
+        $title    = $request->title;
+        $filePath = resource_path("views/user/pages/{$title}.blade.php");
+        $content  = "@extends('user.layout')\n";
+        $content .= "@section('key')\n" . $request->key . "\n@endsection\n";
+        $content .= "@section('desc')\n" . $request->desc . "\n@endsection\n";
+        $content .= "@section('body')\n" . $request->content . "\n@endsection";
         File::put($filePath, $content);
 
         // Generate route
@@ -107,13 +108,21 @@ class PageController extends Controller
         // Check if exist
         if (File::exists($filePath)) {
             // Get content
-            $inFile   = ["@extends('user.layout')", "@section('key')", "@section('desc')" , "@section('body')", "@section('title')", "@endsection"];
-            $content  = str_replace($inFile, '', File::get($filePath));
+            $content = File::get($filePath);
+            $key = $this->getSectionContent($content, 'key');
+            $desc = $this->getSectionContent($content, 'desc');
+            $body = $this->getSectionContent($content, 'body');
 
-            return view('admin.pages.editPages', compact('page'));
+            return view('admin.pages.editPages', compact('page', 'key', 'desc', 'body'));
         }
 
         return redirect()->route('pages')->with('error', 'الصفحة غير موجودة');
+    }
+    // Get sections
+    private function getSectionContent($content, $section)
+    {
+        preg_match("/@section\('$section'\)(.*?)@endsection/s", $content, $matches);
+        return $matches[1] ?? '';
     }
 
     public function update(Request $request, string $page)
@@ -128,7 +137,10 @@ class PageController extends Controller
 
         // Catch
         $newName = $request->input('new_name');
-        $content = "@extends('user.layout') @section('key')".$request->key."@endsection @section('desc')".$request->desc."@endsection @section('body')" . $request->content . "@endsection";
+        $content  = "@extends('user.layout')\n";
+        $content .= "@section('key')\n" . $request->key . "\n@endsection\n";
+        $content .= "@section('desc')\n" . $request->desc . "\n@endsection\n";
+        $content .= "@section('body')\n" . $request->content . "\n@endsection";
 
         // Get file
         $path  = resource_path('views/user/pages');

@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\UrlController;
+use App\Models\Admin\WebsiteName;
 use App\Models\Qr;
 use App\Models\Url;
 use Illuminate\Support\Facades\Auth;
@@ -17,12 +18,20 @@ use Illuminate\Support\Facades\Route;
 
 // Home page
 Route::get('/', function () {
+
     if (Auth::user()) {
+        // Site name
+        $siteName = WebsiteName::first();
+        // Count
         $count = Url::where("user_id", Auth::user()->id)->count();
-        return view('user.الرئيسية', compact('count'));
+        return view('user.الرئيسية', compact('siteName','count'));
     }
-    return view('user.الرئيسية');
+
+    // Site name
+    $siteName = WebsiteName::first();
+    return view('user.الرئيسية',compact('siteName'));
 });
+
 Route::get('الرئيسية', [HomeController::class, 'home']);
 
 
@@ -81,27 +90,27 @@ Route::middleware('isAdmin')->group(function () {
     });
 
     // Guests
-    Route::controller(GuestController::class)->group(function() {
+    Route::controller(GuestController::class)->group(function () {
         // All guests
-        Route::get("guests","index")->name("guests");
+        Route::get("guests", "index")->name("guests");
         // Insert data
-        Route::post("storeGuestLimit/{id}","update")->name("storeGuestLimit");
+        Route::post("storeGuestLimit/{id}", "update")->name("storeGuestLimit");
     });
 
     // Ads
-    Route::controller(AdsController::class)->group(function() {
+    Route::controller(AdsController::class)->group(function () {
         // All ads
-        Route::get("admin/ads","index")->name("ads");
+        Route::get("admin/ads", "index")->name("ads");
         // Add ads page
-        Route::get("admin/addAds","create")->name("addAds");
+        Route::get("admin/addAds", "create")->name("addAds");
         // Add ads
-        Route::post("admin/storeAds","store")->name("storeAds");
+        Route::post("admin/storeAds", "store")->name("storeAds");
         // Edit ads
-        Route::get("admin/editAds/{id}","edit")->name("editAds");
+        Route::get("admin/editAds/{id}", "edit")->name("editAds");
         // Update ads
-        Route::put("admin/updateAds/{id}","update")->name("updateAds");
+        Route::put("admin/updateAds/{id}", "update")->name("updateAds");
         // Delete ads
-        Route::delete("admin/deleteAds/{id}","destroy")->name("deleteAds");
+        Route::delete("admin/deleteAds/{id}", "destroy")->name("deleteAds");
     });
 });
 
@@ -110,9 +119,19 @@ Route::middleware('isAdmin')->group(function () {
 
 // Url
 Route::post('/shorten', [UrlController::class, 'store']);
-Route::get('show/{shortUrl}', [UrlController::class, 'show']);
+Route::fallback(function() {
+    $shortUrl = request()->path();
+    $url = Url::where('short_url', $shortUrl)->first();
+    if ($url) {
+        return redirect($url->original_url);
+    }
+    abort(404);
+});
 
-// QR
+// Url click
+Route::post('/track-click', [UrlController::class, 'trackClick'])->name('track.click');
+
+// Qr
 Route::get('codeQr', [QrCodeController::class, 'create'])->name('codeQr');
 Route::post('generateQr', [QrCodeController::class, 'generate'])->name('generateQr');
 
@@ -124,23 +143,21 @@ Route::get('عن الشركة', function () {
 Route::get('من نحن', function () {
     return view("user.pages.من نحن");
 });
-Route::get('السياسة و الخصوصية', function () {
-    return view("user.pages.السياسة و الخصوصية");
-});
-Route::controller(ContactusController::class)->group(function() {
+
+Route::controller(ContactusController::class)->group(function () {
     // Show page
-    Route::get('تواصل معنا','index')->name('تواصل معنا');
+    Route::get('تواصل معنا', 'index')->name('تواصل معنا');
     // Send message
-    Route::post('contactUs','store')->name('contactUs');
+    Route::post('contactUs', 'store')->name('contactUs');
 });
 
 
 Route::get('/dashboard', function () {
-    // $url = Url::where("user_id",Auth::user()->id)->get();
-    // $Qr  = Qr::where("user_id",Auth::user()->id)->get();
-    // return view('dashboard',compact("url","Qr"));
-    return redirect()->back();
+    $url = Url::where("user_id",Auth::user()->id)->get();
+    $Qr  = Qr::where("user_id",Auth::user()->id)->get();
+    return view('dashboard',compact("url", "Qr"));
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -151,10 +168,15 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 // Add dynamic Route
+Route::get('/اختبار', function () {
+    return view('user.pages.اختبار');
+});
 
-Route::get('/مصطفى', function() {
-        return view('user.pages.مصطفى');
+Route::get('/تانى تانى', function () {
+    return view('user.pages.تانى تانى');
+});
+
+
+Route::get('/سياسة الخصوصية', function() {
+        return view('user.pages.سياسة الخصوصية');
         });
-
-
-

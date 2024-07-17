@@ -32,7 +32,10 @@ class UrlController extends Controller
                 $url->user_id      = $user;
                 $url->save();
 
-                return response()->json(['short_url' => url($shortUrl)]);
+                return response()->json([
+                    'short_url' => url($shortUrl),
+                    'original_url'=>url($request->original_url)
+                ]);
             }
         } else {
             $guestLimit  = GuestLimit::first();
@@ -62,8 +65,14 @@ class UrlController extends Controller
     public function show($shortUrl)
     {
         $url = Url::where('short_url', $shortUrl)->firstOrFail();
+        return redirect($url->original_url);
+    }
 
-        $result = $url->original_url;
-        return view('user.الرئيسية');
+    public function trackClick(Request $request)
+    {
+        $url = Url::where('id', $request->url_id)->firstOrFail();
+        $url->click_count++;
+        $url->save();
+        return response()->json(['status' => 'success']);
     }
 }
